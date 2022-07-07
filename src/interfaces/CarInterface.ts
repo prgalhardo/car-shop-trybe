@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Vehicle } from './VehicleInterface';
+import { Vehicle, VehicleSchema } from './VehicleInterface';
 
 export const CarSchema = z.object({
   doorsQty: z.number({
@@ -9,5 +9,7 @@ export const CarSchema = z.object({
     invalid_type_error: 'seatsQty must be a number',
   }).gte(2).lte(7),
 });
+
+export const VehicleAndCarSchema = CarSchema.merge(VehicleSchema);
   
-export type Car = z.infer<typeof CarSchema> & Vehicle;
+export type Car = z.infer<typeof VehicleAndCarSchema> & Vehicle;
