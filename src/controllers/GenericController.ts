@@ -28,17 +28,17 @@ abstract class GenericController<T> {
     res: Response<T | ResponseError>
   ): Promise<typeof res>;
 
-  // read = async (
-  //   _req: Request,
-  //   res: Response<T[] | ResponseError>,
-  // ): Promise<typeof res> => {
-  //   try {
-  //     const arrayOfObjects = await this.service.read();
-  //     return res.json(arrayOfObjects);
-  //   } catch (error) {
-  //     return res.status(500).json({ error: this.errors.internal });
-  //   }
-  // };
+  read = async (
+    _req: Request,
+    res: Response<T[] | ResponseError>,
+  ): Promise<typeof res> => {
+    try {
+      const arrayOfObjects = await this.service.read();
+      return res.json(arrayOfObjects);
+    } catch (error) {
+      return res.status(500).json({ error: this.errors.internal });
+    }
+  };
 
   // abstract readOne(
   //   req: Request<{ id: string; }>,
