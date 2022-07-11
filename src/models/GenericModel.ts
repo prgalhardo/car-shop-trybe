@@ -1,4 +1,4 @@
-import { Model as M, Document } from 'mongoose';
+import { Model as M, Document, Types } from 'mongoose';
 import { Model } from '../interfaces/ModelInterface';
 
 abstract class GenericModel<T> implements Model<T> {
@@ -13,10 +13,12 @@ abstract class GenericModel<T> implements Model<T> {
   }
 
   async readOne(id: string): Promise<T | null> {
+    if (!Types.ObjectId.isValid(id)) return null;
     return this.model.findOne({ id_: id });
   }
   
   async update(id: string, obj: T): Promise<T | null> {
+    if (!Types.ObjectId.isValid(id)) return null;
     return this.model
       .findOneAndUpdate({ id_: id }, obj, { returnOriginal: false });
   }

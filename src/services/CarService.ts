@@ -14,6 +14,15 @@ class CarService extends GenericService<Car> {
     }
     return this.model.create(obj);
   }
+
+  async update(id: string, obj: Car)
+    :Promise<Car | ServiceError | null> {
+    const parsed = VehicleAndCarSchema.safeParse(obj);
+    if (!parsed.success) {
+      return { error: parsed.error };
+    }
+    return this.model.update(id, obj);
+  }
 }
 
 export default CarService;
