@@ -1,6 +1,6 @@
 import { Car } from '../../../interfaces/CarInterface';
 
-export const newCar: Car = {
+export const car: Car = {
   model: 'Ford KA',
   year: 1999,
   color: 'Silver',
