@@ -24,6 +24,7 @@ abstract class GenericModel<T> implements Model<T> {
   }
 
   async delete(id: string): Promise<T | null> {
+    if (!Types.ObjectId.isValid(id)) return null;
     return this.model.findOneAndDelete({ id_: id });
   }
 }

@@ -23,6 +23,11 @@ class CarService extends GenericService<Car> {
     }
     return this.model.update(id, obj);
   }
+
+  async delete(id: string): Promise<Car | null> {
+    const deletedCar = await this.model.delete(id);
+    return deletedCar;
+  }
 }
 
 export default CarService;

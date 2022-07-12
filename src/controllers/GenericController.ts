@@ -50,10 +50,10 @@ abstract class GenericController<T> {
     res: Response<T | ResponseError>
   ): Promise<typeof res>;
 
-  // abstract delete(
-  //   req: Request<{ id: string; }>,
-  //   res: Response<void>
-  // ): Promise<typeof res>;
+  abstract delete(
+    req: Request<{ id: string; }>,
+    res: Response<void | ResponseError>
+  ): Promise<typeof res>;
 }
 
 export default GenericController;

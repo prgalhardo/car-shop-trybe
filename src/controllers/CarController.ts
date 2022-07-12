@@ -12,6 +12,8 @@ class CarController extends GenericController<Car> {
     this._route = route;
   }
 
+  private messageErrorId = 'Id must have 24 hexadecimal characters';
+
   get route() { return this._route; }
 
   create = async (
@@ -41,7 +43,7 @@ class CarController extends GenericController<Car> {
     try {
       if (id.length < 24) { 
         return res.status(400).json({ 
-          error: 'Id must have 24 hexadecimal characters' }); 
+          error: this.messageErrorId }); 
       }
       const car = await this.service.readOne(id);
       if (!car) { 
@@ -62,12 +64,30 @@ class CarController extends GenericController<Car> {
     try {
       if (id.length < 24) {
         return res.status(400).json({ 
-          error: 'Id must have 24 hexadecimal characters' });
+          error: this.messageErrorId });
       }
       const car = await this.service.update(id, body);
       if (!car) return res.status(404).json({ error: this.errors.notFound });
       if ('error' in car) return res.status(400).json(car);
       return res.status(200).json(car);
+    } catch (err) {
+      return res.status(500).json({ error: this.errors.internal });
+    }
+  };
+
+  delete = async (
+    req: Request<{ id: string }>,
+    res: Response<void | ResponseError>,
+  ): Promise<typeof res> => {
+    const { id } = req.params;
+    try {
+      if (id.length < 24) {
+        return res.status(400).json({ 
+          error: this.messageErrorId });
+      }
+      const car = await this.service.delete(id);
+      if (!car) return res.status(404).json({ error: this.errors.notFound });
+      return res.status(204).json();
     } catch (err) {
       return res.status(500).json({ error: this.errors.internal });
     }
